@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPL 2026 | Live Match Center</title>
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Arial, sans-serif; }
+body { background:linear-gradient(to bottom, #020617, #0b132b); color:white; min-height:100vh; overflow-x: hidden; position: relative; }
+
+/* Animated Background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 177, 153, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(250, 204, 21, 0.08) 0%, transparent 50%);
+    animation: backgroundShift 20s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes backgroundShift {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-10px) rotate(1deg); }
+    66% { transform: translateY(10px) rotate(-1deg); }
+}
+
+/* Floating Particles */
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(250, 204, 21, 0.6);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: float 15s linear infinite;
+    z-index: -1;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* HEADER */
+header {
+    background:rgba(2,6,23,0.95);
+    padding:16px 50px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    animation: headerSlideDown 0.8s ease-out;
+}
+
+@keyframes headerSlideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+header h2 {
+    color:#facc15;
+    animation: logoGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes logoGlow {
+    from { text-shadow: 0 0 5px rgba(250, 204, 21, 0.5); }
+    to { text-shadow: 0 0 20px rgba(250, 204, 21, 0.8); }
+}
+
+nav a {
+    color:white;
+    margin:0 16px;
+    text-decoration:none;
+    font-weight:600;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+}
+
+nav a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(250, 204, 21, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+nav a:hover::before {
+    left: 100%;
+}
+
+nav a:hover { color:#facc15; transform: translateY(-2px); }
+
+/* MAIN CONTENT */
+.live-container {
+    max-width:1000px; margin:60px auto; padding:0 30px;
+    animation: containerFadeIn 1s ease-out 0.3s both;
+}
+
+@keyframes containerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* MATCH HEADER */
+.match-header {
+    display:flex; justify-content:space-between; align-items:center;
+    background:linear-gradient(90deg, #1e3a8a, #0f172a);
+    padding:30px 50px; border-radius:24px 24px 0 0;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    animation: matchHeaderSlideIn 0.8s ease-out 0.5s both;
+}
+
+@keyframes matchHeaderSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.team {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+    transition: all 0.3s ease;
+}
+
+.team:hover {
+    transform: scale(1.05);
+}
+
+.team img {
+    width:80px;
+    height:80px;
+    object-fit:contain;
+    filter:drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
+.team:hover img {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.team-score {
+    font-size:36px;
+    font-weight:bold;
+    transition: all 0.3s ease;
+    animation: scorePulse 2s ease-in-out infinite;
+}
+
+@keyframes scorePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.team:hover .team-score {
+    color: #facc15;
+    text-shadow: 0 0 10px rgba(250, 204, 21, 0.5);
+}
+
+.team-overs {
+    font-size:16px;
+    color:#cbd5f5;
+    transition: color 0.3s ease;
+}
+
+.team:hover .team-overs {
+    color: #94a3b8;
+}
+
+.vs-box { text-align:center; }
+.live-badge {
+    background:#ef4444; padding:6px 16px; border-radius:20px; font-weight:bold; letter-spacing:1px;
+    animation:pulse 1.5s infinite; font-size:14px; display:inline-block; margin-bottom:15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.live-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: liveShine 2s ease-in-out infinite;
+}
+
+@keyframes liveShine {
+    0%, 100% { left: -100%; }
+    50% { left: 100%; }
+}
+
+@keyframes pulse {
+    0% { box-shadow:0 0 0 0 rgba(239,68,68,0.7); transform: scale(1); }
+    50% { box-shadow:0 0 0 10px rgba(239,68,68,0); transform: scale(1.05); }
+    100% { box-shadow:0 0 0 0 rgba(239,68,68,0); transform: scale(1); }
+}
+
+.target-text {
+    font-size:16px;
+    color:#facc15;
+    animation: targetGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes targetGlow {
+    from { text-shadow: 0 0 5px rgba(250, 204, 21, 0.3); }
+    to { text-shadow: 0 0 15px rgba(250, 204, 21, 0.6); }
+}
+
+/* SCORE DETAILS */
+.details-panel {
+    background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05);
+    padding:30px; border-radius:0 0 24px 24px; display:flex; gap:30px;
+}
+
+.batting-table, .bowling-table { width:50%; border-collapse:collapse; }
+th { text-align:left; color:#94a3b8; font-size:13px; text-transform:uppercase; padding-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.1); }
+td { padding:12px 0; font-size:16px; border-bottom:1px solid rgba(255,255,255,0.05); }
+.name-col { font-weight:bold; }
+.highlight { color:#facc15; }
+
+/* COMMENTARY */
+.commentary {
+    margin-top:40px; background:rgba(255,255,255,0.02); padding:30px; border-radius:20px; border:1px solid rgba(255,255,255,0.05);
+}
+.commentary h3 { margin-bottom:20px; color:#facc15; }
+.ball-by-ball { margin-bottom:15px; display:flex; gap:15px; }
+.over-badge { background:#1e293b; padding:6px 12px; border-radius:8px; font-weight:bold; min-width:60px; text-align:center; }
+.ball-desc { font-size:15px; color:#cbd5f5; align-self:center; }
+.boundary { color:#4ade80; font-weight:bold; }
+.wicket { color:#f87171; font-weight:bold; }
+</style>
+</head>
+<body>
+
+<header>
+<h2>IPL 2026</h2>
+<nav>
+<a href="index.html">Home</a>
+<a href="teams.html">Teams</a>
+<a href="stats.html">Stats</a>
+<a href="schedule.html">Schedule</a>
+<a href="points.html">Points</a>
+<a href="auction.html">Auction</a>
+<a href="products.html">Shop</a>
+<a href="cart.html">🛒 Cart</a>
+</nav>
+</header>
+
+<div class="live-container">
+    
+    <div class="match-header">
+        <div class="team">
+            <img src="https://assets.designhill.com/design-blog/wp-content/uploads/2025/03/1-5.jpg" alt="CSK">
+            <div class="team-score">185/4</div>
+            <div class="team-overs">(20.0 Overs)</div>
+        </div>
+        
+        <div class="vs-box">
+            <div class="live-badge">● LIVE</div>
+            <h2>Match 1 • Final Innings</h2>
+            <p class="target-text">MI need 42 runs in 18 balls</p>
+        </div>
+
+        <div class="team">
+            <img src="https://media.crictracker.com/media/attachments/2022/02/Mumbai-Indians-1.jpg" alt="MI">
+            <div class="team-score">144/3</div>
+            <div class="team-overs">(17.0 Overs)</div>
+        </div>
+    </div>
+
+    <div class="details-panel">
+        <table class="batting-table">
+            <tr><th>Batter</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th></tr>
+            <tr><td class="name-col">Suryakumar Y. *</td><td class="highlight">68</td><td>34</td><td>5</td><td>4</td><td>200.00</td></tr>
+            <tr><td class="name-col">Hardik Pandya</td><td>22</td><td>14</td><td>1</td><td>1</td><td>157.14</td></tr>
+        </table>
+        
+        <table class="bowling-table">
+            <tr><th>Bowler</th><th>O</th><th>M</th><th>R</th><th>W</th><th>ECO</th></tr>
+            <tr><td class="name-col">Matheesha Pathirana *</td><td>3.0</td><td>0</td><td>24</td><td class="highlight">2</td><td>8.00</td></tr>
+            <tr><td class="name-col">Ravindra Jadeja</td><td>4.0</td><td>0</td><td>32</td><td>0</td><td>8.00</td></tr>
+        </table>
+    </div>
+
+    <div class="commentary">
+        <h3>Live Commentary</h3>
+        
+        <div class="ball-by-ball">
+            <div class="over-badge">16.6</div>
+            <div class="ball-desc"><span class="boundary">FOUR!</span> Pathirana to Suryakumar, overpitched outside off, driven gloriously through covers. Beautiful shot to end the over.</div>
+        </div>
+        <div class="ball-by-ball">
+            <div class="over-badge">16.5</div>
+            <div class="ball-desc">Pathirana to Suryakumar, 2 runs. Slower bouncer, pulled away to deep square leg.</div>
+        </div>
+        <div class="ball-by-ball">
+            <div class="over-badge">16.4</div>
+            <div class="ball-desc"><span class="wicket">OUT!</span> Pathirana to Ishan Kishan. Excellent yorker targeting the base of middle stump. Castled him!</div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
