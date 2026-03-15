@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPL 2026 | Teams</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins', Arial, Helvetica, sans-serif;
+    background:linear-gradient(135deg,#020617,#0f172a);
+    color:white;
+    overflow-x: hidden;
+}
+
+/* ===== ANIMATED BACKGROUND ===== */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+    animation: backgroundFloat 15s ease-in-out infinite alternate;
+    z-index: -1;
+}
+
+@keyframes backgroundFloat {
+    0% { transform: translateX(0) translateY(0) scale(1); }
+    33% { transform: translateX(-20px) translateY(-10px) scale(1.02); }
+    66% { transform: translateX(20px) translateY(10px) scale(0.98); }
+    100% { transform: translateX(0) translateY(0) scale(1); }
+}
+
+/* ===== FLOATING PARTICLES ===== */
+.particles {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    width: 5px; height: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: floatTeams 10s ease-in-out infinite;
+}
+
+.particle:nth-child(1) { left: 15%; animation-delay: 0s; background: rgba(59, 130, 246, 0.3); }
+.particle:nth-child(2) { left: 35%; animation-delay: 2s; background: rgba(168, 85, 247, 0.3); }
+.particle:nth-child(3) { left: 55%; animation-delay: 4s; background: rgba(236, 72, 153, 0.3); }
+.particle:nth-child(4) { left: 75%; animation-delay: 6s; background: rgba(250, 204, 21, 0.3); }
+.particle:nth-child(5) { left: 25%; animation-delay: 8s; background: rgba(239, 68, 68, 0.3); }
+.particle:nth-child(6) { left: 85%; animation-delay: 10s; background: rgba(78, 205, 196, 0.3); }
+
+@keyframes floatTeams {
+    0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+    25% { transform: translateY(-40px) rotate(90deg); opacity: 0.4; }
+    50% { transform: translateY(-80px) rotate(180deg); opacity: 0.6; }
+    75% { transform: translateY(-40px) rotate(270deg); opacity: 0.4; }
+    100% { transform: translateY(0px) rotate(360deg); opacity: 0.1; }
+}
+
+/* HEADER */
+header{
+    background:rgba(2,6,23,0.9);
+    padding:16px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    position: fixed; width: 100%; z-index: 100;
+    animation: headerSlideDown 0.8s ease-out;
+    transform: translateY(-100%);
+    animation-fill-mode: forwards;
+}
+
+@keyframes headerSlideDown {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(0); }
+}
+
+header h2 {
+    animation: logoGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes logoGlow {
+    0% { text-shadow: 0 0 10px rgba(250, 204, 21, 0.3); }
+    100% { text-shadow: 0 0 20px rgba(250, 204, 21, 0.6); }
+}
+
+nav a{
+    color:#e5e7eb;
+    margin:0 16px;
+    text-decoration:none;
+    font-weight:600;
+    transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+}
+
+nav a::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: -100%;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, #3b82f6, #a855f7, #ec4899, #facc15);
+    transition: left 0.3s ease;
+}
+
+nav a:hover::before { left: 0; }
+nav a:hover{ 
+    color:#facc15;
+    transform: translateY(-2px);
+}
+
+/* SECTION */
+.section{
+    padding:100px 60px 80px;
+    animation: sectionFadeIn 1s ease-out forwards;
+    opacity: 0; transform: translateY(30px);
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes sectionFadeIn {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.section h1 {
+    text-align: center;
+    font-size: 48px;
+    color: #facc15;
+    margin-bottom: 60px;
+    animation: titleGlow 2s ease-in-out infinite alternate;
+    position: relative;
+}
+
+.section h1::after {
+    content: '';
+    position: absolute;
+    bottom: -15px; left: 50%;
+    width: 0; height: 4px;
+    background: linear-gradient(90deg, #3b82f6, #a855f7, #ec4899, #facc15);
+    transition: width 1s ease;
+    transform: translateX(-50%);
+}
+
+@keyframes titleGlow {
+    0% { text-shadow: 0 0 15px rgba(250, 204, 21, 0.4); }
+    100% { text-shadow: 0 0 30px rgba(250, 204, 21, 0.8), 0 0 45px rgba(250, 204, 21, 0.4); }
+}
+
+/* GRID */
+.teams-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:34px;
+    animation: gridFadeIn 1s ease-out 0.8s forwards;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+@keyframes gridFadeIn {
+    0% { opacity: 0; transform: translateY(50px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* TEAM CARD */
+.team-card{
+    position:relative;
+    height:280px;
+    border-radius:20px;
+    overflow:hidden;
+    cursor:pointer;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    background:linear-gradient(145deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02));
+    border:1px solid rgba(255,255,255,0.08);
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+    animation: cardSlideIn 0.8s ease-out forwards;
+    animation-delay: calc(var(--card-index, 0) * 0.1s);
+    animation-fill-mode: forwards;
+}
+
+@keyframes cardSlideIn {
+    0% { opacity: 0; transform: translateY(50px) scale(0.9); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.team-card::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.3), rgba(168, 85, 247, 0.3), rgba(236, 72, 153, 0.3), transparent);
+    border-radius: 22px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+}
+
+.team-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.team-card:hover::after {
+    left: 100%;
+}
+
+.team-card:hover{
+    transform:translateY(-18px) scale(1.03) rotateY(5deg);
+    box-shadow:0 30px 70px rgba(0,0,0,0.7), 0 0 40px rgba(59, 130, 246, 0.2);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.team-card:hover::before {
+    opacity: 1;
+    animation: borderGlow 3s linear infinite;
+}
+
+@keyframes borderGlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* LOGO AREA */
+.team-top{
+    height:68%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position: relative;
+    overflow: hidden;
+}
+
+.team-top::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    transition: all 0.4s ease;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+
+.team-card:hover .team-top::before {
+    width: 200px; height: 200px;
+}
+
+/* FIXED LOGO SIZE + CLEAN LOOK */
+.team-top img{
+    width:110px;
+    height:110px;
+    object-fit:contain;
+    background:rgba(255,255,255,0.12);
+    padding:14px;
+    border-radius:16px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15), 0 10px 25px rgba(0,0,0,0.5);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative; z-index: 2;
+    animation: logoFloat 4s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
+.team-card:hover .team-top img{
+    transform:scale(1.15) rotate(10deg);
+    filter: brightness(1.2) drop-shadow(0 15px 35px rgba(0,0,0,0.7));
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25), 0 20px 40px rgba(0,0,0,0.8);
+}
+
+/* NAME AREA */
+.team-bottom{
+    height:32%;
+    background:linear-gradient(180deg,transparent,rgba(0,0,0,0.9));
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    padding-bottom:18px;
+    font-size:16px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:#facc15;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.team-bottom::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, #3b82f6, #a855f7, #ec4899, #facc15);
+    transition: width 0.4s ease;
+    transform: translateX(-50%);
+}
+
+.team-card:hover .team-bottom {
+    background: linear-gradient(180deg,transparent,rgba(0,0,0,0.95));
+    color: #fff;
+}
+
+.team-card:hover .team-bottom::before {
+    width: 80%;
+}
+
+/* TEAM ACCENT GLOWS */
+.csk:hover{ box-shadow:0 0 40px rgba(250,204,21,.45), 0 0 60px rgba(250,204,21,.2); }
+.mi:hover{ box-shadow:0 0 40px rgba(59,130,246,.45), 0 0 60px rgba(59,130,246,.2); }
+.rcb:hover{ box-shadow:0 0 40px rgba(239,68,68,.45), 0 0 60px rgba(239,68,68,.2); }
+.kkr:hover{ box-shadow:0 0 40px rgba(168,85,247,.45), 0 0 60px rgba(168,85,247,.2); }
+.rr:hover{ box-shadow:0 0 40px rgba(236,72,153,.45), 0 0 60px rgba(236,72,153,.2); }
+.dc:hover{ box-shadow:0 0 40px rgba(96,165,250,.45), 0 0 60px rgba(96,165,250,.2); }
+.srh:hover{ box-shadow:0 0 40px rgba(251,146,60,.45), 0 0 60px rgba(251,146,60,.2); }
+.pbks:hover{ box-shadow:0 0 40px rgba(248,113,113,.45), 0 0 60px rgba(248,113,113,.2); }
+.gt:hover{ box-shadow:0 0 40px rgba(148,163,184,.45), 0 0 60px rgba(148,163,184,.2); }
+.lsg:hover{ box-shadow:0 0 40px rgba(99,102,241,.45), 0 0 60px rgba(99,102,241,.2); }
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+    .teams-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+    
+    .section {
+        padding: 80px 20px 60px;
+    }
+    
+    .team-card {
+        height: 240px;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- Animated Background Particles -->
+<div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+</div>
+
+<header>
+<h2>IPL 2026</h2>
+<nav>
+<a href="index.html">Home</a>
+<a href="teams.html">Teams</a>
+<a href="stats.html">Stats</a>
+<a href="schedule.html">Schedule</a>
+<a href="points.html">Points</a>
+<a href="auction.html">Auction</a>
+<a href="products.html">Shop</a>
+<a href="cart.html">🛒 Cart</a>
+</nav>
+</header>
+
+<section class="section">
+<h1>IPL Teams 2026</h1>
+<div class="teams-grid">
+
+<a href="CSK.html" class="team-card csk">
+<div class="team-top"><img src="https://5.imimg.com/data5/SELLER/Default/2024/3/404147864/NA/ML/IX/4400196/ipl-team-flag-500x500.jpeg"></div>
+<div class="team-bottom">Chennai Super Kings</div>
+</a>
+
+<a href="mi.html" class="team-card mi">
+<div class="team-top"><img src="https://cdorg.b-cdn.net/wp-content/uploads/2022/03/Cricketdata-IPL-Flag-Mumbai-Indians-1.jpg"></div>
+<div class="team-bottom">Mumbai Indians</div>
+</a>
+
+<a href="RCB.html" class="team-card rcb">
+<div class="team-top"><img src="https://cdorg.b-cdn.net/wp-content/uploads/2022/03/Cricketdata-IPL-Flag-Royal-Challenger-Bangalore-1.jpg"></div>
+<div class="team-bottom">Royal Challengers Bangalore</div>
+</a>
+
+<a href="kkr.html" class="team-card kkr">
+<div class="team-top"><img src="https://cdorg.b-cdn.net/wp-content/uploads/2022/03/Cricketdata-IPL-Flag-Kolkata-Knight-Riders-2.jpg"></div>
+<div class="team-bottom">Kolkata Knight Riders</div>
+</a>
+
+<a href="rr.html" class="team-card rr">
+<div class="team-top"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtM_NGnbsJ6bWZVeE14qQG8fZ2RR2CTGdd4w&s"></div>
+<div class="team-bottom">Rajasthan Royals</div>
+</a>
+
+<a href="dc.html" class="team-card dc">
+<div class="team-top"><img src="https://assets.designhill.com/design-blog/wp-content/uploads/2025/03/2-4.jpg"></div>
+<div class="team-bottom">Delhi Capitals</div>
+</a>
+
+<a href="srh.html" class="team-card srh">
+<div class="team-top"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1hZjTE_NaiJvCxFJ31R0MK3H27aMJMK0n4Q&s"></div>
+<div class="team-bottom">Sunrisers Hyderabad</div>
+</a>
+
+<a href="pbks.html" class="team-card pbks">
+<div class="team-top"><img src="https://cdorg.b-cdn.net/wp-content/uploads/2022/03/Cricketdata-IPL-Flag-Punjab-Kings-2.jpg"></div>
+<div class="team-bottom">Punjab Kings</div>
+</a>
+
+<a href="gt.html" class="team-card gt">
+<div class="team-top"><img src="https://cdorg.b-cdn.net/wp-content/uploads/2022/03/Cricketdata-IPL-Flag-Gujarat-Titans-2.jpg"></div>
+<div class="team-bottom">Gujarat Titans</div>
+</a>
+
+<a href="lsg.html" class="team-card lsg">
+<div class="team-top"><img src="https://assets.designhill.com/design-blog/wp-content/uploads/2025/03/9-4.jpg"></div>
+<div class="team-bottom">Lucknow Super Giants</div>
+</a>
+
+</div>
+</section>
+
+<script>
+// Enhanced Teams Page Animations
+document.addEventListener('DOMContentLoaded', () => {
+    // Set CSS custom properties for staggered animations
+    const teamCards = document.querySelectorAll('.team-card');
+    teamCards.forEach((card, index) => {
+        card.style.setProperty('--card-index', index);
+    });
+
+    // Intersection Observer for scroll-triggered animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.animationPlayState = 'running';
+                }, index * 50);
+            }
+        });
+    }, observerOptions);
+
+    // Observe all team cards
+    teamCards.forEach(card => {
+        observer.observe(card);
+    });
+
+    // Dynamic particle creation
+    function createParticle() {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 10 + 's';
+        particle.style.animationDuration = (Math.random() * 8 + 8) + 's';
+        particle.style.width = (Math.random() * 6 + 2) + 'px';
+        particle.style.height = particle.style.width;
+        document.querySelector('.particles').appendChild(particle);
+
+        setTimeout(() => {
+            particle.remove();
+        }, 15000);
+    }
+
+    // Create new particles periodically
+    setInterval(createParticle, 2000);
+
+    // Mouse movement parallax effect
+    document.addEventListener('mousemove', (e) => {
+        const particles = document.querySelectorAll('.particle');
+        const mouseX = e.clientX / window.innerWidth;
+        const mouseY = e.clientY / window.innerHeight;
+
+        particles.forEach((particle, index) => {
+            const speed = (index + 1) * 0.3;
+            const x = (mouseX - 0.5) * speed * 20;
+            const y = (mouseY - 0.5) * speed * 20;
+            particle.style.transform += ` translate(${x}px, ${y}px)`;
+        });
+    });
+
+    // Scroll-based animations
+    let scrollY = 0;
+    window.addEventListener('scroll', () => {
+        scrollY = window.scrollY;
+
+        // Dynamic header background on scroll
+        const header = document.querySelector('header');
+        if (scrollY > 50) {
+            header.style.background = 'rgba(2,6,23,0.95)';
+            header.style.backdropFilter = 'blur(15px)';
+        } else {
+            header.style.background = 'rgba(2,6,23,0.9)';
+            header.style.backdropFilter = 'blur(10px)';
+        }
+
+        // Title glow effect based on scroll
+        const title = document.querySelector('.section h1');
+        if (title) {
+            const intensity = Math.min(scrollY / 300, 1);
+            title.style.textShadow = `0 0 ${15 + intensity * 15}px rgba(250, 204, 21, ${0.4 + intensity * 0.4})`;
+        }
+    });
+
+    // Click animations for team cards
+    teamCards.forEach(card => {
+        card.addEventListener('click', () => {
+            card.style.transform += ' scale(0.95)';
+            setTimeout(() => {
+                card.style.transform = card.style.transform.replace(' scale(0.95)', '');
+            }, 150);
+        });
+    });
+
+    // Team card hover sound effect (visual feedback)
+    teamCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.filter = 'brightness(1.1)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.filter = 'brightness(1)';
+        });
+    });
+
+    // Animate title underline on load
+    setTimeout(() => {
+        const title = document.querySelector('.section h1');
+        if (title) {
+            title.style.setProperty('--underline-width', '200px');
+        }
+    }, 1000);
+
+    // Random team card glow rotation
+    setInterval(() => {
+        const randomCard = teamCards[Math.floor(Math.random() * teamCards.length)];
+        randomCard.style.boxShadow = `0 0 30px rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.3)`;
+        
+        setTimeout(() => {
+            randomCard.style.boxShadow = '';
+        }, 2000);
+    }, 5000);
+});
+</script>
+
+</body>
+</html>
